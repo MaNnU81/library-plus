@@ -151,7 +151,18 @@ export class BookService {
     }
   ]
 
-  getAllBooks(): Book[]{
+  getAllBooks(): Book[] {
+    const storedBooks = localStorage.getItem('arraybooks');
+  
+    if (storedBooks) {
+      
+      this.books = JSON.parse(storedBooks);
+    } else {
+      
+      this.books = this.books;
+      localStorage.setItem('arraybooks', JSON.stringify(this.books));
+    }
+  
     return this.books;
   }
 
@@ -159,7 +170,33 @@ export class BookService {
     return this.books.find((book) => book.id === id);
   }
 
-  submitBook(title: string, author: string, image: string, summary: string, subject: string){
-    console.log(`titolo: ${title}, autore: ${author}, riassunto: ${summary}, genere: ${subject}, url immagine: ${image}`)
-  }
+ 
+
+  submitBook( newId: number, title: string, author: string, image: string, summary: string, subject: string){
+
+    const book = {
+      newId,
+      title,
+      author,
+      image,
+      summary,
+      subject
+  };
+
+  // Recuperiamo i libri già salvati (se presenti)
+  const books = JSON.parse(localStorage.getItem('arraybooks') || '[]');
+
+  // Aggiungiamo il nuovo libro alla lista
+  books.push(book);
+
+  // Salviamo l'array aggiornato nel LocalStorage
+  localStorage.setItem('arraybooks', JSON.stringify(books));
+
+  console.log("Libro salvato correttamente!");
+
+
+
+    
+  } 
+  
 }

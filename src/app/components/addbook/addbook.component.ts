@@ -21,7 +21,13 @@ export class AddbookComponent {
   })
 
   submitAddBook() {
+    const storedBooks = localStorage.getItem('arraybooks');
+    const books = storedBooks ? JSON.parse(storedBooks) : [];
+  
+    const newId = books.length > 0 ? Math.max(...books.map((book: any) => book.id)) + 1 : 1;
+    
     this.bookService.submitBook(
+      newId,
       this.applyForm.value.title ?? '',
       this.applyForm.value.author ?? '',
       this.applyForm.value.summary ?? '',
