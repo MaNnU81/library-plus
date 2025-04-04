@@ -172,15 +172,23 @@ export class BookService {
 
  
 
-  submitBook( newId: number, title: string, author: string, image: string, summary: string, subject: string){
+  submitBook( newId: number, NewTitle: string, newAuthor: string, NewImage: string, newSummary: string, newSubject: string){
 
-    const book = {
-      newId,
-      title,
-      author,
-      image,
-      summary,
-      subject
+    const authorObj: Author  = {
+      name: newAuthor,
+      birth_year: null,
+      death_year: null
+    }
+const authorsArray: Author[] = [];
+authorsArray.push(authorObj);
+
+    const book: Book = {
+      id: newId,
+      title: NewTitle,
+      authors: authorsArray,
+      image: NewImage,
+      summaries: newSummary,
+      subject: newSubject
   };
 
   // Recuperiamo i libri già salvati (se presenti)
